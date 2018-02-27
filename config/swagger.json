@@ -1,0 +1,396 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Swagger Petstore",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "host": "petstore.swagger.io",
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "summary": "Login summary",
+                "operationId": "login",
+                "tags": [
+                    "login"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User autentication",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of pets",
+                        "headers": {
+                            "x-next": {
+                                "type": "string",
+                                "description": "A link to the next page of responses"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/task/{date}": {
+            "get": {
+                "summary": "Info for a specific day tasks",
+                "operationId": "showTasksByDay",
+                "tags": [
+                    "DayTasks"
+                ],
+                "parameters": [
+                    {
+                        "name": "date",
+                        "in": "path",
+                        "required": true,
+                        "description": "The date of the tasks to retrieve",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "schema": {
+                            "$ref": "#/definitions/Tasks"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/task": {
+            "post": {
+                "summary": "update or create task",
+                "operationId": "updateTask",
+                "tags": [
+                    "UpdateTask"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "task",
+                        "description": "task to update or create",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/pets": {
+            "get": {
+                "summary": "List all pets",
+                "operationId": "listPets",
+                "tags": [
+                    "pets"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "How many items to return at one time (max 100)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An paged array of pets",
+                        "headers": {
+                            "x-next": {
+                                "type": "string",
+                                "description": "A link to the next page of responses"
+                            }
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Pets"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a pet",
+                "operationId": "createPets",
+                "tags": [
+                    "pets"
+                ],
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Pet object that needs to be added to the store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Null response"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/pets/{petId}": {
+            "get": {
+                "summary": "Info for a specific pet",
+                "operationId": "showPetById",
+                "tags": [
+                    "pets"
+                ],
+                "parameters": [
+                    {
+                        "name": "petId",
+                        "in": "path",
+                        "required": true,
+                        "description": "The id of the pet to retrieve",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request",
+                        "schema": {
+                            "$ref": "#/definitions/Pets"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Pet": {
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "cosa": {
+                    "type": "string"
+                }
+            }
+        },
+        "Pets": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "items": {
+                "$ref": "#/definitions/Pet"
+            }
+        },
+        "User": {
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                }
+            }
+        },
+        "UserRequest": {
+            "required": [
+                "username",
+                "password"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "Tasks": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10,
+            "items": {
+                "$ref": "#/definitions/Task"
+            }
+        },
+        "Task": {
+            "required": [
+                "name",
+                "seconds",
+                "status",
+                "initialTime",
+                "finalTime",
+                "executions"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "seconds": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 40
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "stopped"
+                    ]
+                },
+                "initialTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "finalTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "executions": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 10,
+                    "items": {
+                        "$ref": "#/definitions/Execution"
+                    }
+                }
+            }
+        },
+        "Execution": {
+            "required": [
+                "name",
+                "seconds",
+                "status",
+                "initialTime",
+                "finalTime"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "seconds": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 1,
+                    "maximum": 40
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "stopped"
+                    ]
+                },
+                "initialTime": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "finalTime": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Error": {
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
